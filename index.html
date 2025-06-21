@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Surat Maaf</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #ef779f;
+      overflow: hidden;
+    }
+
+    .halaman {
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    .halaman.active {
+      display: flex;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background: rgb(244, 123, 181);
+      border: none;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgb(229, 132, 174)
+      cursor: pointer;
+    }
+
+    #balonContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .balon {
+      width: 60px;
+      height: 80px;
+      background: rgb(251, 6, 128);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .balon::after {
+      content: '';
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      width: 2px;
+      height: 20px;
+      background: rgb(239, 193, 230);
+      transform: translateX(-50%);
+    }
+
+    .balon.pop {
+      background: transparent;
+      box-shadow: none;
+      pointer-events: none;
+    }
+
+    .pesan {
+      max-width: 90%;
+      font-size: 1.2rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <audio id="bg-music" loop>
+    <source src="lagu.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Halaman 1 -->
+  <div class="halaman active" id="hal1">
+    <h1>sayang, dede mau ngomong sesuatu</h1>
+    <button onclick="mulai()">mulai</button>
+  </div>
+
+  <!-- Halaman 2 -->
+  <div class="halaman" id="hal2">
+    <h2>pecahin semua balonnya yaa sayang</h2>
+    <div id="balonContainer"></div>
+    <button id="btnLanjut" style="display:none" onclick="keHalaman3()">lanjut ➜</button>
+  </div>
+
+  <!-- Halaman 3 -->
+  <div class="halaman" id="hal3">
+    <div class="pesan">
+      <p>
+        sayang🤍<br><br>
+        sayang,maafin dede ya, demi Allah byy, dede beneran ga ada niat buat bohongin abang, dede ga mikirin masa lalu dede lagi karena buat dede, masa lalu itu udah selesai sejak abang masuk ke hidup dede, sekarang yang dede lihat cuma abang, yang dede pikirin cuma abang, dan yang dede jaga adalah hatinya abang bukan orang lain, soal yang tadi, dede beneran lupa, bukan karena dede nyembunyiin, tapi karena dede ngerasa itu udah ga penting lagi buat dede, yang penting sekarang adalah abang, dede cuma mau mencintai abang, setiap hari, tanpa jeda, oiya sayang yang tadi dede bilang tentang akun bodong itu sumpah dede beneran karna mantan dede yang lain emang pake akun itu, dede ga inget kenapa bisa 2 orang itu pake akun utama dede.<br><br>
+        dede minta maaf karena udah bikin abang ngerasa ga nyaman padahal satu satunya yang dede pengen adalah kamu ngerasa aman dan dicintai, dede janji akan lebih peka, lebih jujur, dan lebih hati hati jaga hati abang, dede ga mau bikin abang sedih dan kecewa, abang tu rumah buat hati dede, pelabuhan paling tenang yang pernah dede temuin dan dede sayang banget sama abang, kalo dede bisa, dede bakal peluk abang sekarang, bisikin satu per satu rasa yang gak pernah bisa dede ketik utuh yaitu, "dede milik abang, dan dede gaa bakal kemana mana sayang"🤍🤍🤍
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const musik = document.getElementById("bg-music");
+    const balonContainer = document.getElementById("balonContainer");
+    const btnLanjut = document.getElementById("btnLanjut");
+
+    function mulai() {
+      document.getElementById("hal1").classList.remove("active");
+      document.getElementById("hal2").classList.add("active");
+      musik.play();
+      generateBalon();
+    }
+
+    function generateBalon() {
+      for (let i = 0; i < 10; i++) {
+        const balon = document.createElement("div");
+        balon.classList.add("balon");
+        balon.addEventListener("click", () => {
+          balon.classList.add("pop");
+          balon.style.transform = "scale(0)";
+          cekSemuaPecah();
+        });
+        balonContainer.appendChild(balon);
+      }
+    }
+
+    function cekSemuaPecah() {
+      const semuaBalon = document.querySelectorAll(".balon");
+      const sudahPecah = Array.from(semuaBalon).every(b => b.classList.contains("pop"));
+      if (sudahPecah) {
+        btnLanjut.style.display = "inline-block";
+      }
+    }
+
+    function keHalaman3() {
+      document.getElementById("hal2").classList.remove("active");
+      document.getElementById("hal3").classList.add("active");
+    }
+  </script>
+</body>
+</html>
